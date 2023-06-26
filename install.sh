@@ -77,9 +77,8 @@ kubeadm init --pod-network-cidr 10.10.0.0/16 --kubernetes-version 1.26.1
 ufw allow 6783
 ufw allow 6784
 
-echo -e kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
-
 echo -e "Remember to run the below commands as a normal user.\n"
+echo -e kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
 echo -e "mkdir -p \$HOME/.kube"
 echo -e "sudo cp -i /etc/kubernetes/admin.conf \$HOME/.kube/config"
 echo -e "sudo chown \$(id -u):\$(id -g) \$HOME/.kube/config\n"
