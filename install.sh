@@ -78,11 +78,11 @@ ufw allow 6783
 ufw allow 6784
 
 echo -e "Remember to run the below commands as a normal user.\n"
-echo -e kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
 echo -e "mkdir -p \$HOME/.kube"
 echo -e "sudo cp -i /etc/kubernetes/admin.conf \$HOME/.kube/config"
 echo -e "sudo chown \$(id -u):\$(id -g) \$HOME/.kube/config\n"
-echo -e
+
+echo -e "kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml"
 echo -e "Use the below command to generate the token for your workers node."
 echo -e "kubeadm token create --print-join-command"
 
