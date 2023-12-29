@@ -17,7 +17,7 @@ CNI_VERSION="1.3.0"
 POD_NETWORK_CIDR="10.10.0.0/16"
 
 # Define the version of Weave Network to be installed
-WEAVE_NETWORK_VERSION=2.8.1
+WEAVE_NETWORK_VERSION="2.8.1"
 
 CONTAINERD_URL=https://github.com/containerd/containerd/releases/download/v${CONTAINERD_VERSION}/containerd-${CONTAINERD_VERSION}-linux-amd64.tar.gz
 CONTAINERD_SERVICE_URL=https://raw.githubusercontent.com/containerd/containerd/main/containerd.service
@@ -70,23 +70,23 @@ printf "\n\nNetwork configuration is done! If you want to use a multi node setup
 # CONTAINERD
 printf "\n\nInstalling containerd...\n\n"
 rm /tmp/"${CONTAINERD_URL##*/}"
- wget --quiet --show-progress $CONTAINERD_URL -P /tmp/
+wget $CONTAINERD_URL -P /tmp/
 tar Cxzf /usr/local /tmp/"${CONTAINERD_URL##*/}"
 
 # CONTAINERD DAEMON
- wget --quiet --show-progress $CONTAINERD_SERVICE_URL -P /etc/systemd/system/
+wget $CONTAINERD_SERVICE_URL -P /etc/systemd/system/
 systemctl daemon-reload
 systemctl enable --now containerd
 
 # dependencies >>
 
 # RUNC
- wget --quiet --show-progress $RUNC_URL -P /tmp/
+wget $RUNC_URL -P /tmp/
 install -m 755 /tmp/runc.amd64 /usr/local/sbin/runc
 
 # CNI
 rm /tmp/"${CNI_URL##*/}"
- wget --quiet --show-progress $CNI_URL -P /tmp/
+wget $CNI_URL -P /tmp/
 mkdir -p /opt/cni/bin
 tar Cxzf /opt/cni/bin /tmp/"${CNI_URL##*/}"
 
@@ -106,6 +106,7 @@ systemctl restart containerd
 
 # ------ INSTALL KUBERNETES BEGIN ------
 printf "\n\nInstalling kubernetes...\n\n"
+swapoff -a
 sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
 apt-get update
 apt-get install -y apt-transport-https ca-certificates curl
@@ -140,7 +141,7 @@ if [[ $answer_lowercase == "yes" || $answer_lowercase == "y" ]]; then
   echo -e "kubeadm token create --print-join-command\n"
   
   printf "\n\nUse the below command to run workloads on the control plane.\n\n"
-  echo -e "kubectl taint nodes --all node-role.kubernetes.io/control-plane:NoSchedule-\n"
+  echo -e "kubectl taint nodes --all node-role.kubernetes.io/${HOSTNAME}:NoSchedule-\n"
 
 fi
 
