@@ -18,7 +18,7 @@ This script automates the installation and configuration of Kubernetes on Ubuntu
 2. **Network Configuration**:
    - Configure Static IP:
      - Use the file `00-installer-config.yaml` or create a new one based on the provided template.
-     - The YAML file (`netplan-config.yaml`) contains network configuration settings for setting up a static IP using Netplan.
+     - The YAML file (`00-installer-config.yam`) contains network configuration settings for setting up a static IP using Netplan.
      
      ```yaml
      network:
@@ -48,7 +48,7 @@ This script automates the installation and configuration of Kubernetes on Ubuntu
      
      **Test/Apply configuration**
      - Edit the file to set the desired static IP address, subnet mask, gateway, and DNS server IPs for your node.
-     - Place the file under `/etc/netplan`.
+     - Place the file under `/etc/netplan` (The file may already exist).
      - Test the configuration using `netplan try` (Note: SSH connections may disrupt).
      - Apply the configuration permanently using `netplan apply`.
 
@@ -59,15 +59,12 @@ This script automates the installation and configuration of Kubernetes on Ubuntu
 
    **NOTE**: Ensure that the IP addresses provided, both for static assignment and the hostname, are either leased from your network's DHCP server or are outside the DHCP range to prevent conflicts or address allocation issues within your network.
 
-3. **Versions**:
-   - Modify variables at the top of the script to specify Kubernetes, containerd, CNI, and network versions as needed.
-
-4. **Run the Script**:
+3. **Run the Script**:
    ```bash
    sudo ./install.sh
    ```
 
-5. **Initialize Control Plane**:
+4. **Initialize Control Plane**:
    - After running the script, it will prompt to initialize a control plane if desired.
    - Follow post-installation instructions provided by the script after initializing the control plane.
 
