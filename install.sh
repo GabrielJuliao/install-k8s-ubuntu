@@ -19,10 +19,13 @@ POD_NETWORK_CIDR="10.10.0.0/16"
 # Define the version of Weave Network to be installed
 WEAVE_NETWORK_VERSION="2.8.1"
 
-CONTAINERD_URL=https://github.com/containerd/containerd/releases/download/v${CONTAINERD_VERSION}/containerd-${CONTAINERD_VERSION}-linux-amd64.tar.gz
+# Define the architechture of packages to installed (amd64, arm64)
+ARCH="amd64"
+
+CONTAINERD_URL=https://github.com/containerd/containerd/releases/download/v${CONTAINERD_VERSION}/containerd-${CONTAINERD_VERSION}-linux-${ARCH}.tar.gz
 CONTAINERD_SERVICE_URL=https://raw.githubusercontent.com/containerd/containerd/main/containerd.service
-RUNC_URL=https://github.com/opencontainers/runc/releases/download/v${RUNC_VERSION}/runc.amd64
-CNI_URL=https://github.com/containernetworking/plugins/releases/download/v${CNI_VERSION}/cni-plugins-linux-amd64-v${CNI_VERSION}.tgz
+RUNC_URL=https://github.com/opencontainers/runc/releases/download/v${RUNC_VERSION}/runc.${ARCH}
+CNI_URL=https://github.com/containernetworking/plugins/releases/download/v${CNI_VERSION}/cni-plugins-linux-${ARCH}-v${CNI_VERSION}.tgz
 
 # Make sure only root can run our script
 if [[ $EUID -ne 0 ]]; then
@@ -82,7 +85,7 @@ systemctl enable --now containerd
 
 # RUNC
 wget $RUNC_URL -P /tmp/
-install -m 755 /tmp/runc.amd64 /usr/local/sbin/runc
+install -m 755 /tmp/runc.${ARCH} /usr/local/sbin/runc
 
 # CNI
 rm /tmp/"${CNI_URL##*/}"

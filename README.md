@@ -3,10 +3,22 @@
 This script automates the installation and configuration of Kubernetes on Ubuntu systems. It installs essential components like container runtimes (containerd), network interfaces, and sets up a Kubernetes control plane.
 
 ## Prerequisites
-- **Ubuntu** (20.04 - 22.04): This script is intended for Ubuntu systems.
+- **Ubuntu**: This script is intended for Ubuntu systems 20.04 - 22.04, amd64 or arm64.
 - **Root Access**: Ensure you have root privileges to execute the script.
 - **Unique Hostname**: Make sure each node has a unique hostname for cluster identification.
 - **Static IP Address**: Configure a static IP address for each node in the cluster.
+
+## Configuration Variables
+
+You can configure the packages by changing the variables at the beginning of the script (`install.sh`).
+
+- `KUBERNETES_VERSION`: Version of Kubernetes to install.
+- `CONTAINERD_VERSION`: Version of containerd (container runtime).
+- `RUNC_VERSION`: Version of runc (container runtime dependency).
+- `CNI_VERSION`: Version of CNI (Container Network Interface).
+- `POD_NETWORK_CIDR`: Pod network CIDR for Kubernetes cluster.
+- `WEAVE_NETWORK_VERSION`: Version of Weave Network to be installed.
+- `ARCH`: Architecture of the packages to be installed `amd64` or `arm64`.
 
 ## Steps
 
@@ -67,17 +79,6 @@ This script automates the installation and configuration of Kubernetes on Ubuntu
 4. **Initialize Control Plane**:
    - After running the script, it will prompt to initialize a control plane if desired.
    - Follow post-installation instructions provided by the script after initializing the control plane.
-
-## Configuration Variables
-
-You can configure the versions of the installed packeges by changing the variables at the beginning of the script (`install.sh`).
-
-- `KUBERNETES_VERSION`: Version of Kubernetes to install.
-- `CONTAINERD_VERSION`: Version of containerd (container runtime).
-- `RUNC_VERSION`: Version of runc (container runtime dependency).
-- `CNI_VERSION`: Version of CNI (Container Network Interface).
-- `POD_NETWORK_CIDR`: Pod network CIDR for Kubernetes cluster.
-- `WEAVE_NETWORK_VERSION`: Version of Weave Network to be installed.
 
 ## Script Details
 
