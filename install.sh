@@ -144,7 +144,7 @@ if [[ $answer_lowercase == "yes" || $answer_lowercase == "y" ]]; then
   echo -e "kubeadm token create --print-join-command\n"
   
   printf "\n\nUse the below command to run workloads on the control plane.\n\n"
-  echo -e "kubectl taint nodes --all node-role.kubernetes.io/${HOSTNAME}:NoSchedule-\n"
+  echo -e "kubectl taint nodes --all node-role.kubernetes.io/control-plane:NoSchedule-\n"
 
 fi
 
